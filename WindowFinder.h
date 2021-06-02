@@ -1,18 +1,18 @@
-#ifndef __WINDOW_FINDER_H__
-#define __WINDOW_FINDER_H__
+#ifndef __WINDOWFINDER_H__
+#define __WINDOWFINDER_H__
 #include <Windows.h>
 
 class WindowFinder
 {
 public:
 	template<class Container>
-	static bool Find(Container& set)
+	static bool FindAllWindows(Container& set)
 	{
 		return EnumWindows(&WindowFinder::getWindowsList<Container>, LPARAM(&set));
 	}
 
 	template<class Container>
-	static bool Find(WNDENUMPROC lpEnumFunc, Container& set)
+	static bool FindAllWindows(WNDENUMPROC lpEnumFunc, Container& set)
 	{
 		return EnumWindows(lpEnumFunc, LPARAM(&set));
 	}
@@ -23,6 +23,8 @@ public:
 		return getWindowsList<Container>;
 	}
 
+	static HWND FindWindowByCaption(const wchar_t[]);
+	static HWND FindWindowByClass(const wchar_t[]);
 	static wchar_t* GetWindowName(wchar_t[], HWND, int);
 	static wchar_t* GetWindowClass(wchar_t[], HWND, int);
 
