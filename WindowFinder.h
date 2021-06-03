@@ -82,7 +82,7 @@ inline static bool WindowFinder::FindParentWindows(WNDENUMPROC lpEnumFunc, Conta
 template<class Container>
 inline static bool WindowFinder::FindChildWindows(HWND hParent, Container& set)
 {
-	return EnumChildWindows(hParent, parentWindowsFilter<Container>, LPARAM(&set));
+	return EnumChildWindows(hParent, childWindowsFilter<Container>, LPARAM(&set));
 }
 
 template<class Container>
