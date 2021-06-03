@@ -3,5 +3,6 @@
 *.filters
 *.user
 .vs/
+.vscode/
 Debug/
 Release/
