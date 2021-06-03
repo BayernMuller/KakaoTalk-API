@@ -1,8 +1,8 @@
 #include "WindowFinder.h"
 
-HWND WindowFinder::FindWindowByCaption(const wchar_t caption[])
+HWND WindowFinder::FindWindowByName(const wchar_t name[])
 {
-	return ::FindWindow(NULL, caption);
+	return ::FindWindow(NULL, name);
 }
 
 HWND WindowFinder::FindWindowByClass(const wchar_t class_[])

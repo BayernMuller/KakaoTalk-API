@@ -5,10 +5,7 @@
 class WindowHooker
 {
 public:
-	WindowHooker()
-	{
-		GetMessage()
-	}
+
 
 private:
 	
