@@ -1,28 +1,30 @@
-﻿#include "dllmain.h"
+﻿
+#include "HookDLL.h"
 #include "pch.h"
 
 #pragma data_seg(".npdata")
+
 HINSTANCE g_hModule = NULL;
 HHOOK g_hHook = NULL;
-void (*g_fpCallback)(LPARAM lParam);
+
 #pragma data_seg()
 #pragma comment (linker, "/SECTION:.npdata,RWS")
+#pragma warning(disable:4996)
 
 LRESULT CALLBACK HookProc(int nCode, WPARAM wParam, LPARAM lParam)
 {
-    if (nCode >= 0 && g_fpCallback)
+    if (nCode >= 0)
     {
-        g_fpCallback(lParam);
+        
     }
     return CallNextHookEx(g_hHook, nCode, wParam, lParam);
 }
 
-extern "C" __declspec(dllexport) void InstallHook(HWND hWnd, void(*fpCallback)(long))
+extern "C" __declspec(dllexport) void InstallHook(HWND hWnd)
 {
     DWORD pid, tid;
     tid = GetWindowThreadProcessId(hWnd, &pid);
-    g_hHook = SetWindowsHookEx(WH_CALLWNDPROCRET, HookProc, g_hModule, tid);
-    g_fpCallback = fpCallback;
+    g_hHook = SetWindowsHookEx(WH_GETMESSAGE, HookProc, g_hModule, tid);
 }
 
 extern "C" __declspec(dllexport) void UninstallHook()

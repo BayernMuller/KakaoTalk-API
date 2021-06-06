@@ -1,32 +1,27 @@
 #include <iostream>
 #include <vector>
+#include "HookDLL/HookDLL.h"
 #include "WindowFinder.h"
+#pragma comment(lib, "Debug/HookDLL.lib")
+
 using namespace std;
+
+void callback(long param)
+{
+	cout << "-" << endl;
+}
 
 int main()
 {
 	HWND hKakao = WindowFinder::FindWindowByName(L"Ä«Ä«¿ÀÅå");
+	wchar_t str[MAX_SIZE];
+	WindowFinder::GetWindowClass(str, hKakao, MAX_SIZE);
+	wcout << str << endl;
 	if (hKakao)
 	{
-		HWND handle = WindowFinder::FindChildBySubString(hKakao, L"ListCtrl");
-		HandleArray arr;
-		WindowFinder::FindChildWindows(handle, arr);
-
-		for (auto child : arr)
-		{
-			wchar_t str[256] = { 0, };
-			WindowFinder::GetWindowClass(str, child, 256);
-			wcout << str << endl;
-			WindowFinder::GetWindowName(str, child, 256);
-			wcout << str << endl;
-			
-
-			DWORD pid, tid;
-			tid = GetWindowThreadProcessId(child, &pid);
-			cout << (void*)pid << endl << (void*)tid << endl;
-			cout << "----" << endl;
-		}
-		return 0;
+		InstallHook(hKakao);
+		tuple<int,int>
+		cin.get();
+		UninstallHook();
 	}
-	cout << "hKakao is NULL" << endl;
 }

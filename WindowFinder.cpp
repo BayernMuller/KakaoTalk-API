@@ -48,5 +48,4 @@ wchar_t* WindowFinder::GetWindowClass(wchar_t str[], HWND hWnd, int maxsize)
 		return nullptr;
 	::GetClassName(hWnd, str, maxsize);
 	return str;
-
 }
