@@ -1,7 +1,7 @@
 #pragma once
 #include <Windows.h>
 
-constexpr wchar_t PIPE_NAME[] = L"HookPipe";
 
+extern "C" __declspec(dllexport) wchar_t* GetPipeName(HWND hWnd, wchar_t buf[]);
 extern "C" __declspec(dllexport) bool InstallHook(HWND hTargetWnd);
-extern "C" __declspec(dllexport) void UninstallHook();
+extern "C" __declspec(dllexport) void UninstallHook(HWND hTargetWnd);
