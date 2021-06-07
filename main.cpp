@@ -1,15 +1,10 @@
 #include <iostream>
 #include <vector>
-#include "HookDLL/HookDLL.h"
+
 #include "WindowFinder.h"
-#pragma comment(lib, "Debug/HookDLL.lib")
+#include "WindowHooker.h"
 
 using namespace std;
-
-void callback(long param)
-{
-	cout << "-" << endl;
-}
 
 int main()
 {
@@ -20,7 +15,7 @@ int main()
 	if (hKakao)
 	{
 		InstallHook(hKakao);
-		tuple<int,int>
+		
 		cin.get();
 		UninstallHook();
 	}
