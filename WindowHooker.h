@@ -1,11 +1,11 @@
 #ifndef __WINDOWHOOKER_H__
 #define __WINDOWHOOKER_H__
-#include <thread>
 #include <Windows.h>
 #include "HookDLL/HookDLL.h"
 #pragma comment(lib, "Debug/HookDLL.lib")
 
-using Handler = void(*)(MSG* pMsg);
+namespace std { class thread; }
+using Handler = void(*)(const MSG*);
 
 class WindowHooker
 {
@@ -13,17 +13,19 @@ public:
 	WindowHooker();
 	~WindowHooker();
 
-	void SetHandler(Handler handler);
-	void BeginHooking(HWND hTargetWnd);
+	void BeginHooking(HWND hTargetWnd, Handler handler);
 	void EndHooking();
-	
-private:
-	std::thread* mpThread;
-	Handler mHandler;
-	HWND mhTargetWnd;
 
 private:
-	static int mObjectCount;
+	void removeThread();
+	static void threadFuntion(const WindowHooker& self);
+
+private:
+	std::thread* m_pThread;
+	Handler m_Handler;
+	HANDLE m_hPipe;
+	HWND m_hTargetWnd;
+	bool m_bFlag;
 };
 
 #endif

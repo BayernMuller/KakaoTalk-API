@@ -25,7 +25,6 @@ LRESULT CALLBACK HookProc(int nCode, WPARAM wParam, LPARAM lParam)
 
 extern "C" __declspec(dllexport) wchar_t* GetPipeName(HWND hWnd, wchar_t buf[])
 {
-    
     lstrcpy(buf, L"\\\\.\\pipe\\");
     GetWindowText(hWnd, buf + lstrlen(buf), MAX_SIZE);
     GetClassName(hWnd, buf + lstrlen(buf), MAX_SIZE);
@@ -44,7 +43,7 @@ extern "C" __declspec(dllexport) bool InstallHook(HWND hTargetWnd)
     if (hPipe == INVALID_HANDLE_VALUE)
         return false;
 
-    HHOOK hHook = SetWindowsHookEx(WH_GETMESSAGE, HookProc, g_hModule, tid);
+    HHOOK hHook = SetWindowsHookEx(WH_KET, HookProc, g_hModule, tid);
     g_Hookers[hTargetWnd] = std::make_pair(hPipe, hHook);
     return true;
 }

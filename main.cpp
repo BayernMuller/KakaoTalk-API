@@ -6,17 +6,17 @@
 
 using namespace std;
 
+void callback(const MSG* pMsg)
+{
+	cout << pMsg->message << endl;
+}
+
 int main()
 {
 	HWND hKakao = WindowFinder::FindWindowByName(L"Ä«Ä«¿ÀÅå");
-	wchar_t str[MAX_SIZE];
-	WindowFinder::GetWindowClass(str, hKakao, MAX_SIZE);
-	wcout << str << endl;
-	if (hKakao)
-	{
-		InstallHook(hKakao);
-		
-		cin.get();
-		UninstallHook();
-	}
+	
+	WindowHooker hook;
+	hook.BeginHooking(hKakao, callback);
+	cin.get();
+	hook.EndHooking();
 }
